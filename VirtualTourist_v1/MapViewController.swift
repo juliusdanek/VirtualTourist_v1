@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 class MapViewController: UIViewController, MKMapViewDelegate {
 
@@ -32,6 +33,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         mapView.delegate = self
         
     }
+    
+    var sharedContext: NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance().managedObjectContext!
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -47,7 +52,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
         if UIGestureRecognizerState.Began == gestureRecognizer.state {
             annotation.coordinate = touchMapCoordinate
+            
+            let pin = Pin(annotationLatitude: annotation.coordinate.latitude, annotationLongitude: annotation.coordinate.longitude, context: sharedContext)
+            
             mapView.addAnnotation(annotation)
+            
+            CoreDataStackManager.sharedInstance().saveContext()
             
         }
         
@@ -132,6 +142,24 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         return annotationView
         
     }
+    
+//    func fetchAllActors() -> [Person] {
+//        let error: NSErrorPointer = nil
+//        
+//        // Create the Fetch Request
+//        let fetchRequest = NSFetchRequest(entityName: "Person")
+//        
+//        // Execute the Fetch Request
+//        let results = sharedContext.executeFetchRequest(fetchRequest, error: error)
+//        
+//        // Check for Errors
+//        if error != nil {
+//            println("Error in fectchAllActors(): \(error)")
+//        }
+//        
+//        // Return the results, cast to an array of Person objects
+//        return results as! [Person]
+//    }
     
 
 

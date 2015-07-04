@@ -19,6 +19,8 @@
 		18D12CB91B474A490017262B /* FlickrViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D12CB81B474A490017262B /* FlickrViewCell.swift */; };
 		18D12CBC1B4769550017262B /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 18D12CBA1B4769550017262B /* Model.xcdatamodeld */; };
 		18D12CBE1B476B880017262B /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D12CBD1B476B880017262B /* CoreDataStackManager.swift */; };
+		18D12CC01B47813A0017262B /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D12CBF1B47813A0017262B /* Pin.swift */; };
+		18D12CC21B4781B60017262B /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D12CC11B4781B50017262B /* Photo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
 		18D12CB81B474A490017262B /* FlickrViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrViewCell.swift; sourceTree = "<group>"; };
 		18D12CBB1B4769550017262B /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		18D12CBD1B476B880017262B /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
+		18D12CBF1B47813A0017262B /* Pin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
+		18D12CC11B4781B50017262B /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +100,8 @@
 				18D12CBD1B476B880017262B /* CoreDataStackManager.swift */,
 				18D12CBA1B4769550017262B /* Model.xcdatamodeld */,
 				18D12CB81B474A490017262B /* FlickrViewCell.swift */,
+				18D12CBF1B47813A0017262B /* Pin.swift */,
+				18D12CC11B4781B50017262B /* Photo.swift */,
 				1818B67E1B461FE000C3EC19 /* MapViewController.swift */,
 				1818B69E1B463E3E00C3EC19 /* VTClient.swift */,
 				1818B6801B461FE000C3EC19 /* Main.storyboard */,
@@ -239,6 +245,8 @@
 				18D12CB51B47293A0017262B /* AlbumViewController.swift in Sources */,
 				1818B69F1B463E3E00C3EC19 /* VTClient.swift in Sources */,
 				18D12CB91B474A490017262B /* FlickrViewCell.swift in Sources */,
+				18D12CC21B4781B60017262B /* Photo.swift in Sources */,
+				18D12CC01B47813A0017262B /* Pin.swift in Sources */,
 				18D12CBE1B476B880017262B /* CoreDataStackManager.swift in Sources */,
 				1818B67F1B461FE000C3EC19 /* MapViewController.swift in Sources */,
 				1818B67D1B461FE000C3EC19 /* AppDelegate.swift in Sources */,
