@@ -137,7 +137,7 @@ class VTClient: NSObject {
     //create Singleton of class
     class func sharedInstance() -> VTClient {
         struct Singleton {
-            static var sharedInstance = VTClient()
+            static let sharedInstance = VTClient()
         }
         return Singleton.sharedInstance
     }

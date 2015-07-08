@@ -68,9 +68,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
                             let minimum: Int = min(photos.count, 20)
                             for i in 0..<minimum {
                                 let randomIndex = Int(arc4random_uniform(UInt32(photos.count)))
-                                let photo = NSData(contentsOfURL: photos[randomIndex]["url"] as! NSURL)
-                                let blabla = UIImageJPEGRepresentation(UIImage(data: photo!), 0.8)
-                                println(blabla)
+                                let photoData = NSData(contentsOfURL: photos[randomIndex]["url"] as! NSURL)
+                                let blablaPhoto = UIImage(data: photoData!)
+                                let id = photos[randomIndex]["id"] as! String
+                                let coreImage = Photo(docPath: id, context: self.sharedContext)
+                                println(blablaPhoto)
+                                coreImage.image = blablaPhoto!
+//                                image.pin = pin
                             }
                         }
                 }

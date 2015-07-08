@@ -21,13 +21,28 @@ class Photo: NSManagedObject {
     var image: UIImage {
         
         get {
-            
+            return ImageClient.sharedInstance().imageWithIdentifier(path)!
         }
-        
         set {
-            
+            ImageClient.sharedInstance().storeImage(image, identifier: path)
         }
     }
+    
+    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    }
+    
+    init(docPath: String, context: NSManagedObjectContext) {
+        
+        let entity = NSEntityDescription.entityForName("Photo", inManagedObjectContext: context)!
+        
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+        
+        path = docPath
+        
+        println(path)
+    }
+
     
     
 }
