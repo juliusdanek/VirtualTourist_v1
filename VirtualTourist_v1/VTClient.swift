@@ -31,7 +31,7 @@ class VTClient: NSObject {
     }
     
     
-    func getPageNumber (latitude: Double, longitude: Double, completionHandler: (success: Bool, imageArray: [NSURL]?, errorString: String?) -> Void) {
+    func getPageNumber (latitude: Double, longitude: Double, completionHandler: (success: Bool, imageArray: [[String: AnyObject]]?, errorString: String?) -> Void) {
         
         //parameters for call
         var parameterDict: [String: String] = [
@@ -65,10 +65,13 @@ class VTClient: NSObject {
                                 completionHandler(success: true, imageArray: nil, errorString: nil)
                             } else if let photosData = photos["photo"] as? [[String: AnyObject]] {
 //                                println(photosData)
-                                var urlArray = [NSURL]()
+                                var urlArray = [[String: AnyObject]]()
                                 for photo in photosData {
                                     if let url = photo["url_q"] as? String {
-                                        urlArray.append(NSURL(string: url)!)
+                                        var photoDict = [String: AnyObject]()
+                                        photoDict["url"] = (NSURL(string: url)!)
+                                        photoDict["id"] = photo["id"] as! String
+                                        urlArray.append(photoDict)
                                     }
                                 }
                                 completionHandler(success: true, imageArray: urlArray, errorString: nil)

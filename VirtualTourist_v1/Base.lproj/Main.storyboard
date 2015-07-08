@@ -71,13 +71,11 @@
                         <viewControllerLayoutGuide type="bottom" id="xcg-ve-bfJ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="MAY-0h-LEs">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="grR-Dy-TZZ">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="grR-Dy-TZZ">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="0.0" y="64" width="400" height="119"/>
-                                </variation>
                             </mapView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1jw-Md-62D">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -161,9 +159,6 @@
                                         <barButtonItem key="backBarButtonItem" title="Back" id="70R-3H-TlY"/>
                                     </navigationItem>
                                 </items>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="0.0" y="20" width="400" height="44"/>
-                                </variation>
                             </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -191,10 +186,13 @@
                                 <exclude reference="hd1-yl-DYN"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="bmv-E5-4Xv"/>
                                 <exclude reference="03K-tz-Mfk"/>
                                 <exclude reference="Etw-VS-ebS"/>
                                 <exclude reference="SQU-6m-uyq"/>
                                 <exclude reference="YLF-q3-8YI"/>
+                                <exclude reference="X3s-Sg-XcW"/>
+                                <exclude reference="n4c-WS-Nak"/>
                                 <exclude reference="6ES-3q-doo"/>
                                 <exclude reference="8g9-af-a3g"/>
                                 <exclude reference="cz1-rO-8S1"/>
@@ -202,9 +200,6 @@
                                 <exclude reference="MjB-fG-Dmb"/>
                                 <exclude reference="dRU-8p-9YH"/>
                                 <exclude reference="klr-Ai-kay"/>
-                                <exclude reference="X3s-Sg-XcW"/>
-                                <exclude reference="n4c-WS-Nak"/>
-                                <exclude reference="bmv-E5-4Xv"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -215,10 +210,13 @@
                                 <include reference="hd1-yl-DYN"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="bmv-E5-4Xv"/>
                                 <include reference="03K-tz-Mfk"/>
                                 <include reference="Etw-VS-ebS"/>
                                 <include reference="SQU-6m-uyq"/>
                                 <include reference="YLF-q3-8YI"/>
+                                <include reference="X3s-Sg-XcW"/>
+                                <include reference="n4c-WS-Nak"/>
                                 <include reference="6ES-3q-doo"/>
                                 <include reference="8g9-af-a3g"/>
                                 <include reference="cz1-rO-8S1"/>
@@ -226,9 +224,6 @@
                                 <include reference="MjB-fG-Dmb"/>
                                 <include reference="dRU-8p-9YH"/>
                                 <include reference="klr-Ai-kay"/>
-                                <include reference="X3s-Sg-XcW"/>
-                                <include reference="n4c-WS-Nak"/>
-                                <include reference="bmv-E5-4Xv"/>
                             </mask>
                         </variation>
                     </view>

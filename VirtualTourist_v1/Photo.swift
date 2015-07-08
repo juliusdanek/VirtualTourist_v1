@@ -8,14 +8,26 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 @objc(Photo)
 
 
 class Photo: NSManagedObject {
     
-    @NSManaged var url: String
+    @NSManaged var path: String
     @NSManaged var pin: Pin?
+    
+    var image: UIImage {
+        
+        get {
+            
+        }
+        
+        set {
+            
+        }
+    }
     
     
 }
