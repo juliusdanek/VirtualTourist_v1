@@ -61,36 +61,6 @@ class ImageClient: NSObject {
         self.storeImage(photo, identifier: path)
         return photo!
     }
-
-    
-    func loadImageFromUrl (url: NSURL) {
-        
-        
-    }
-    
-    //    - (void) loadImageFromURL:(NSURL*)url placeholderImage:(UIImage*)placeholder cachingKey:(NSString*)key {
-    //    self.imageURL = url;
-    //    self.image = placeholder;
-    //    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
-    //    dispatch_async(queue, ^{
-    //    NSData *data = [NSData dataWithContentsOfURL:url];
-    //
-    //    UIImage *imageFromData = [UIImage imageWithData:data];
-    //
-    //    [FTWCache setObject:UIImagePNGRepresentation(imageFromData) forKey:key];
-    //    UIImage *imageToSet = imageFromData;
-    //    if (imageToSet) {
-    //    if ([self.imageURL.absoluteString isEqualToString:url.absoluteString]) {
-    //				dispatch_async(dispatch_get_main_queue(), ^{
-    //    self.image = imageFromData;
-    //				});
-    //    }
-    //    }
-    //    self.imageURL = nil;
-    //    });
-    //}
-    
-    
     
     class func sharedInstance() -> ImageClient {
         struct Singleton {

@@ -52,6 +52,8 @@ class AlbumViewController: UIViewController, UICollectionViewDataSource, UIColle
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadData", name: "imageLoaded", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "enableButton", name: "downloadComplete", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "disableButton", name: "downloadStarted", object: nil)
     }
     
     
@@ -78,10 +80,6 @@ class AlbumViewController: UIViewController, UICollectionViewDataSource, UIColle
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-//        let photo = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
-//        sharedContext.deleteObject(photo)
-//        
-//        CoreDataStackManager.sharedInstance().saveContext()
     }
     
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
@@ -89,18 +87,22 @@ class AlbumViewController: UIViewController, UICollectionViewDataSource, UIColle
     }
     
     func newCollection () {
-        if collectionView.indexPathsForSelectedItems().count != 0 {
-            for indexPath in collectionView.indexPathsForSelectedItems() {
-                let photo = fetchedResultsController.objectAtIndexPath(indexPath as! NSIndexPath) as! Photo
-//                self.collectionView.deselectItemAtIndexPath(indexPath as? NSIndexPath, animated: false)
+        let indexArray = collectionView.indexPathsForSelectedItems() as! [NSIndexPath]
+        if indexArray.count != 0 {
+            //Array needs to be sorted descendingly. Otherwise app will crash due to index mis match
+            let sortedArray = indexArray.sorted{$0.row > $1.row}
+            for indexPath in sortedArray {
+                let photo = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
+                sharedContext.deleteObject(photo)
+                CoreDataStackManager.sharedInstance().saveContext()
+            }
+        } else {
+            //otherwise delete all the photos contained in the pin
+            for photo in pin.photos {
                 sharedContext.deleteObject(photo)
                 CoreDataStackManager.sharedInstance().saveContext()
             }
         }
-//        for photo in pin.photos {
-//            sharedContext.deleteObject(photo)
-//            CoreDataStackManager.sharedInstance().saveContext()
-//        }
     }
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
@@ -108,12 +110,10 @@ class AlbumViewController: UIViewController, UICollectionViewDataSource, UIColle
                 
                 case .Insert:
                     collectionView.reloadData()
-                case .Update:
-                    println("updating")
                 case .Delete:
                     collectionView.performBatchUpdates({
-                        self.collectionView.deleteItemsAtIndexPaths([indexPath!])
                         self.collectionView.deselectItemAtIndexPath(indexPath, animated: false)
+                        self.collectionView.deleteItemsAtIndexPaths([indexPath!])
                         return
                         }, completion: {success in
                             if success {
@@ -130,14 +130,22 @@ class AlbumViewController: UIViewController, UICollectionViewDataSource, UIColle
     func reloadData () {
         dispatch_async(dispatch_get_main_queue(), {
             self.collectionView.reloadSections(NSIndexSet(index: 0))
-//            self.collectionView.performBatchUpdates({
-//                self.collectionView.reloadSections(NSIndexSet(index: 0))
-//                return
-//                }, completion: {success in
-//                    if success{
-//                        println("update complete")
-//                    }
-//            })
+        })
+    }
+    
+    func disableButton () {
+        dispatch_async(dispatch_get_main_queue(), {
+            self.barButton.enabled = false
+            //disable animations to stop flickering while downloading images
+            UIView.setAnimationsEnabled(false)
+        })
+    }
+    
+    //this function enables the bar button once the download of images has finished
+    func enableButton () {
+        dispatch_async(dispatch_get_main_queue(), {
+            self.barButton.enabled = true
+            UIView.setAnimationsEnabled(true)
         })
     }
     

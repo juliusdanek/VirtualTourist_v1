@@ -66,6 +66,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
             
             //this entire function is executed on a background thread, allowing for the download of pictures in the background
             VTClient.sharedInstance().getPageNumber(pin.latitude as Double, longitude: pin.longitude as Double, completionHandler: {success, photoArray, error in
+                    let notification = NSNotification(name: "downloadStarted", object: nil)
+                    NSNotificationCenter.defaultCenter().postNotification(notification)
                     if success {
                         if let photos = photoArray {
                             let minimum: Int = min(photos.count, 20)
@@ -80,8 +82,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
                                 let notification = NSNotification(name: "imageLoaded", object: nil)
                                 NSNotificationCenter.defaultCenter().postNotification(notification)
                             }
+                            let notification = NSNotification(name: "downloadComplete", object: nil)
+                            NSNotificationCenter.defaultCenter().postNotification(notification)
+                            CoreDataStackManager.sharedInstance().saveContext()
                         }
-                    CoreDataStackManager.sharedInstance().saveContext()
                 }
             })
         }

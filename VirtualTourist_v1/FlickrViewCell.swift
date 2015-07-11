@@ -14,18 +14,18 @@ class FlickrViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     
     
-    //custom getter and setter methods for selected, modifying the appearance when an item is selected. 
+//    custom getter and setter methods for selected, modifying the appearance when an item is selected. 
     override var selected: Bool {
         get {
             return super.selected
         }
         set {
             if newValue {
-                println("selected")
+//                println("selected")
                 super.selected = true
                 self.imageView.alpha = 0.5
             } else if newValue == false {
-                println("deslected")
+//                println("deselected")
                 super.selected = false
                 self.imageView.alpha = 1.0
             }

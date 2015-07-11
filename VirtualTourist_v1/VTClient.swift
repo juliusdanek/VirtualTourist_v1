@@ -66,6 +66,7 @@ class VTClient: NSObject {
                             } else if let photosData = photos["photo"] as? [[String: AnyObject]] {
 //                                println(photosData)
                                 var urlArray = [[String: AnyObject]]()
+                                //create a dictionary that maps both the picture id as well as the url.
                                 for photo in photosData {
                                     if let url = photo["url_q"] as? String {
                                         var photoDict = [String: AnyObject]()
@@ -74,6 +75,7 @@ class VTClient: NSObject {
                                         urlArray.append(photoDict)
                                     }
                                 }
+                                println(urlArray)
                                 completionHandler(success: true, imageArray: urlArray, errorString: nil)
                             }
                         }
