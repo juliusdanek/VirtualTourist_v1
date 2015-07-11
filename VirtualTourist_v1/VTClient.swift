@@ -69,7 +69,7 @@ class VTClient: NSObject {
                                 for photo in photosData {
                                     if let url = photo["url_q"] as? String {
                                         var photoDict = [String: AnyObject]()
-                                        photoDict["url"] = (NSURL(string: url)!)
+                                        photoDict["url"] = url
                                         photoDict["id"] = photo["id"] as! String
                                         urlArray.append(photoDict)
                                     }

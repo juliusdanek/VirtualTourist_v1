@@ -98,15 +98,10 @@
 			isa = PBXGroup;
 			children = (
 				1818B67C1B461FE000C3EC19 /* AppDelegate.swift */,
-				18D12CB41B47293A0017262B /* AlbumViewController.swift */,
-				18D12CBD1B476B880017262B /* CoreDataStackManager.swift */,
-				187E62BA1B4DBB7000F718BD /* ImageClient.swift */,
-				18D12CBA1B4769550017262B /* Model.xcdatamodeld */,
-				18D12CB81B474A490017262B /* FlickrViewCell.swift */,
-				18D12CBF1B47813A0017262B /* Pin.swift */,
-				18D12CC11B4781B50017262B /* Photo.swift */,
 				1818B67E1B461FE000C3EC19 /* MapViewController.swift */,
-				1818B69E1B463E3E00C3EC19 /* VTClient.swift */,
+				18D12CB41B47293A0017262B /* AlbumViewController.swift */,
+				18A004261B4F013C00E3F6E3 /* Clients */,
+				18A004251B4F013100E3F6E3 /* Model */,
 				1818B6801B461FE000C3EC19 /* Main.storyboard */,
 				1818B6831B461FE000C3EC19 /* Images.xcassets */,
 				1818B6851B461FE000C3EC19 /* LaunchScreen.xib */,
@@ -138,6 +133,27 @@
 				1818B6911B461FE000C3EC19 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		18A004251B4F013100E3F6E3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				18D12CBD1B476B880017262B /* CoreDataStackManager.swift */,
+				18D12CBA1B4769550017262B /* Model.xcdatamodeld */,
+				18D12CBF1B47813A0017262B /* Pin.swift */,
+				18D12CC11B4781B50017262B /* Photo.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		18A004261B4F013C00E3F6E3 /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				187E62BA1B4DBB7000F718BD /* ImageClient.swift */,
+				18D12CB81B474A490017262B /* FlickrViewCell.swift */,
+				1818B69E1B463E3E00C3EC19 /* VTClient.swift */,
+			);
+			name = Clients;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

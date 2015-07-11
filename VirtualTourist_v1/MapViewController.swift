@@ -62,28 +62,28 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
             let pin = Pin(annotationLatitude: touchMapCoordinate.latitude, annotationLongitude: touchMapCoordinate.longitude, context: sharedContext)
             mapView.addAnnotation(pin)
             
+            CoreDataStackManager.sharedInstance().saveContext()
+            
+            //this entire function is executed on a background thread, allowing for the download of pictures in the background
             VTClient.sharedInstance().getPageNumber(pin.latitude as Double, longitude: pin.longitude as Double, completionHandler: {success, photoArray, error in
                     if success {
                         if let photos = photoArray {
                             let minimum: Int = min(photos.count, 20)
                             for i in 0..<minimum {
                                 let randomIndex = Int(arc4random_uniform(UInt32(photos.count)))
-                                let photoData = NSData(contentsOfURL: photos[randomIndex]["url"] as! NSURL)
-                                let blablaPhoto = UIImage(data: photoData!)
-                                let id = photos[randomIndex]["id"] as! String
-                                let coreImage = Photo(docPath: id, context: self.sharedContext)
-                                println(blablaPhoto)
-                                coreImage.image = blablaPhoto!
-//                                image.pin = pin
+                                let url = photos[randomIndex]["url"] as! String
+                                let coreImage = Photo(photoUrl:url,context: self.sharedContext)
+                                coreImage.pin = pin
+                            }
+                            for photo in pin.photos {
+                                photo.image = ImageClient.sharedInstance().downloadImage(photo.url, path: photo.path)
+                                let notification = NSNotification(name: "imageLoaded", object: nil)
+                                NSNotificationCenter.defaultCenter().postNotification(notification)
                             }
                         }
+                    CoreDataStackManager.sharedInstance().saveContext()
                 }
             })
-            
-            CoreDataStackManager.sharedInstance().saveContext()
-            
-            
-            
         }
     }
     
@@ -106,14 +106,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
             //remove the annotation
             mapView.removeAnnotation(view.annotation)
         } else {
+            let avc = self.storyboard?.instantiateViewControllerWithIdentifier("AlbumViewController") as! AlbumViewController
+            let pin = view.annotation as! Pin
+            avc.pin = pin
+            //deselect the annotation so it can be deleted once coming back to main mapView
+            mapView.deselectAnnotation(view.annotation, animated: false)
+            self.navigationController?.pushViewController(avc, animated: true)
+            
+            
 //            VTClient.sharedInstance().getPageNumber(view.annotation.coordinate.latitude, longitude: view.annotation.coordinate.longitude, completionHandler: {success, photoArray, error in
 //                if success {
 //                    dispatch_async(dispatch_get_main_queue(), {
-//                        let avc = self.storyboard?.instantiateViewControllerWithIdentifier("AlbumViewController") as! AlbumViewController
-//                        avc.photoAlbum = photoArray
-//                        //deselect the annotation so it can be deleted once coming back to main mapView
-//                        mapView.deselectAnnotation(view.annotation, animated: false)
-//                        self.navigationController?.pushViewController(avc, animated: true)
 //                    })
 //                }
 //            })

@@ -16,15 +16,23 @@ import UIKit
 class Photo: NSManagedObject {
     
     @NSManaged var path: String
+    @NSManaged var url: String
     @NSManaged var pin: Pin?
     
-    var image: UIImage {
+    var image: UIImage? {
         
         get {
-            return ImageClient.sharedInstance().imageWithIdentifier(path)!
+            if let image = ImageClient.sharedInstance().imageWithIdentifier(path) {
+                return image
+            } else {
+                return UIImage(named: "placeholder")
+            }
         }
         set {
-            ImageClient.sharedInstance().storeImage(image, identifier: path)
+            //if the new value is nil, i.e. in the case of deletion, erase the picture from memory
+            if newValue == nil {
+                ImageClient.sharedInstance().storeImage(newValue, identifier: path)
+            }
         }
     }
     
@@ -32,15 +40,33 @@ class Photo: NSManagedObject {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
     
-    init(docPath: String, context: NSManagedObjectContext) {
+    init(photoUrl: String, context: NSManagedObjectContext) {
         
         let entity = NSEntityDescription.entityForName("Photo", inManagedObjectContext: context)!
         
         super.init(entity: entity, insertIntoManagedObjectContext: context)
         
-        path = docPath
+        path = generatePathFromDate()
         
-        println(path)
+        image = UIImage(named: "placeholder")
+        
+        url = photoUrl
+    }
+    
+    //setter method of image to nil -> results in deletion of picture as specified in ImageClient
+    override func prepareForDeletion() {
+        super.prepareForDeletion()
+        image = nil
+    }
+    
+    
+    //Helper:
+    //Generates unique path in documents directory
+    func generatePathFromDate () -> String {
+        let now = NSDate()
+        
+        var pathString :String = String(format:"%f", now.timeIntervalSince1970)
+        return pathString
     }
 
     
