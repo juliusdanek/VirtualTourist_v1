@@ -17,6 +17,7 @@ class Pin: NSManagedObject, MKAnnotation {
     @NSManaged var latitude: NSNumber
     @NSManaged var longitude: NSNumber
     @NSManaged var photos: [Photo]
+    @NSManaged var urls: [URL]
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
@@ -31,7 +32,6 @@ class Pin: NSManagedObject, MKAnnotation {
         latitude = NSNumber(double: annotationLatitude)
         
         longitude = NSNumber(double: annotationLongitude)
-        
     }
     
     var coordinate: CLLocationCoordinate2D {

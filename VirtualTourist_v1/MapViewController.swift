@@ -17,6 +17,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.setToolbarHidden(true, animated: false)
+        
         //see if mapDict exists, if yes then set span and center of region accordinngly
         //MARK: For some reason the span is never set correctly, it simply doesn't work even though it saves it
         if let mapDict = NSUserDefaults.standardUserDefaults().objectForKey("mapDict") as? [String: Double] {
@@ -65,20 +67,27 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
             CoreDataStackManager.sharedInstance().saveContext()
             
             //this entire function is executed on a background thread, allowing for the download of pictures in the background
+            //download picture as a function of latitude and longitude coordinates
             VTClient.sharedInstance().getPageNumber(pin.latitude as Double, longitude: pin.longitude as Double, completionHandler: {success, photoArray, error in
                     let notification = NSNotification(name: "downloadStarted", object: nil)
                     NSNotificationCenter.defaultCenter().postNotification(notification)
                     if success {
+                        //if successful, first save all the urls as url objects and assign them to the pin
                         if let photos = photoArray {
-                            let minimum: Int = min(photos.count, 20)
+                            for photo in photos {
+                                let url = URL(stringURL: photo, assignedPin: pin, context: self.sharedContext)
+                            }
+                            //then choose twenty random urls and initiate photo objects from them
+                            let minimum: Int = min(pin.urls.count, 20)
                             for i in 0..<minimum {
-                                let randomIndex = Int(arc4random_uniform(UInt32(photos.count)))
-                                let url = photos[randomIndex]["url"] as! String
-                                let coreImage = Photo(photoUrl:url,context: self.sharedContext)
-                                coreImage.pin = pin
+                                //choose a random url, assign it to a photo and then delete that url object from our Pin.
+                                let randomURL = pin.urls[Int(arc4random_uniform(UInt32(pin.urls.count)))]
+                                let coreImage = Photo(photoUrl: randomURL.urlString, assignedPin: pin, context: self.sharedContext)
+                                self.sharedContext.deleteObject(randomURL)
+                                CoreDataStackManager.sharedInstance().saveContext()
                             }
                             for photo in pin.photos {
-                                photo.image = ImageClient.sharedInstance().downloadImage(photo.url, path: photo.path)
+                                photo.image = ImageClient.sharedInstance().downloadImage(photo.urlString, path: photo.path)
                                 let notification = NSNotification(name: "imageLoaded", object: nil)
                                 NSNotificationCenter.defaultCenter().postNotification(notification)
                             }
@@ -116,44 +125,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
             //deselect the annotation so it can be deleted once coming back to main mapView
             mapView.deselectAnnotation(view.annotation, animated: false)
             self.navigationController?.pushViewController(avc, animated: true)
-            
-            
-//            VTClient.sharedInstance().getPageNumber(view.annotation.coordinate.latitude, longitude: view.annotation.coordinate.longitude, completionHandler: {success, photoArray, error in
-//                if success {
-//                    dispatch_async(dispatch_get_main_queue(), {
-//                    })
-//                }
-//            })
         }
     }
     
     override func setEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
+        if editing {
+            navigationController?.setToolbarHidden(false, animated: true)
+        } else {
+            navigationController?.setToolbarHidden(true, animated: true)
+        }
         //saving the context here as it crashes in didSelectAnnotationView
         CoreDataStackManager.sharedInstance().saveContext()
     }
-    
-    //MARK: Trying to drag and drop the fucking pin
-    
-//    func mapView(mapView: MKMapView!, didAddAnnotationViews views: [AnyObject]!) {
-//        
-//        if let annotationView = views[0] as? MKAnnotationView {
-//            annotationView.setDragState(MKAnnotationViewDragState.Starting, animated: true)
-//        }
-//    }
-    
-//    func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, didChangeDragState newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
-//        
-//        if (oldState == .Starting && newState == .Ending) {
-//            println("Ending drag")
-//        }
-//        
-//        if newState == MKAnnotationViewDragState.Ending {
-//            var droppedAt: CLLocationCoordinate2D = view.annotation.coordinate
-//            
-//            println(droppedAt.latitude + droppedAt.longitude)
-//        }
-//    }
     
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         

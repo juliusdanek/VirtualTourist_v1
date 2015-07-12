@@ -20,6 +20,9 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="8rd-iN-23e">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="600"/>
+                                </variation>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -52,6 +55,13 @@
                             </mask>
                         </variation>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="a4A-1h-cGt"/>
+                        <barButtonItem title="Tap Pin To Delete" id="A2b-1s-wq4">
+                            <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="4zL-n8-Qxv"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" id="hU1-dk-Hdj"/>
                     <connections>
                         <outlet property="mapView" destination="8rd-iN-23e" id="ukV-YQ-kya"/>
@@ -74,6 +84,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Pictures at this Location" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qze-MP-rd1">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="grR-Dy-TZZ">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                             </mapView>
@@ -177,55 +193,65 @@
                             <constraint firstItem="xcg-ve-bfJ" firstAttribute="top" secondItem="on9-JW-FJ9" secondAttribute="bottom" id="bmv-E5-4Xv"/>
                             <constraint firstItem="grR-Dy-TZZ" firstAttribute="leading" secondItem="MAY-0h-LEs" secondAttribute="leadingMargin" constant="-16" id="cz1-rO-8S1"/>
                             <constraint firstItem="1jw-Md-62D" firstAttribute="bottom" secondItem="on9-JW-FJ9" secondAttribute="top" id="dRU-8p-9YH"/>
+                            <constraint firstItem="xcg-ve-bfJ" firstAttribute="top" secondItem="qze-MP-rd1" secondAttribute="bottom" constant="80" id="e7C-uu-sj4">
+                                <variation key="widthClass=compact" constant="200"/>
+                            </constraint>
                             <constraint firstItem="1jw-Md-62D" firstAttribute="trailing" secondItem="on9-JW-FJ9" secondAttribute="trailing" id="klr-Ai-kay"/>
+                            <constraint firstAttribute="centerX" secondItem="qze-MP-rd1" secondAttribute="centerX" id="l9L-Nj-tl5"/>
                             <constraint firstItem="on9-JW-FJ9" firstAttribute="leading" secondItem="MAY-0h-LEs" secondAttribute="leadingMargin" constant="-16" id="n4c-WS-Nak"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
+                                <exclude reference="qze-MP-rd1"/>
                                 <exclude reference="grR-Dy-TZZ"/>
                                 <exclude reference="1jw-Md-62D"/>
                                 <exclude reference="on9-JW-FJ9"/>
                                 <exclude reference="hd1-yl-DYN"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="bmv-E5-4Xv"/>
+                                <exclude reference="6ES-3q-doo"/>
+                                <exclude reference="8g9-af-a3g"/>
+                                <exclude reference="cz1-rO-8S1"/>
                                 <exclude reference="03K-tz-Mfk"/>
                                 <exclude reference="Etw-VS-ebS"/>
                                 <exclude reference="SQU-6m-uyq"/>
                                 <exclude reference="YLF-q3-8YI"/>
-                                <exclude reference="X3s-Sg-XcW"/>
-                                <exclude reference="n4c-WS-Nak"/>
-                                <exclude reference="6ES-3q-doo"/>
-                                <exclude reference="8g9-af-a3g"/>
-                                <exclude reference="cz1-rO-8S1"/>
                                 <exclude reference="Fxg-D8-kRQ"/>
                                 <exclude reference="MjB-fG-Dmb"/>
                                 <exclude reference="dRU-8p-9YH"/>
                                 <exclude reference="klr-Ai-kay"/>
+                                <exclude reference="l9L-Nj-tl5"/>
+                                <exclude reference="X3s-Sg-XcW"/>
+                                <exclude reference="n4c-WS-Nak"/>
+                                <exclude reference="bmv-E5-4Xv"/>
+                                <exclude reference="e7C-uu-sj4"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
+                                <include reference="qze-MP-rd1"/>
                                 <include reference="grR-Dy-TZZ"/>
                                 <include reference="1jw-Md-62D"/>
                                 <include reference="on9-JW-FJ9"/>
                                 <include reference="hd1-yl-DYN"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="bmv-E5-4Xv"/>
+                                <include reference="6ES-3q-doo"/>
+                                <include reference="8g9-af-a3g"/>
+                                <include reference="cz1-rO-8S1"/>
                                 <include reference="03K-tz-Mfk"/>
                                 <include reference="Etw-VS-ebS"/>
                                 <include reference="SQU-6m-uyq"/>
                                 <include reference="YLF-q3-8YI"/>
-                                <include reference="X3s-Sg-XcW"/>
-                                <include reference="n4c-WS-Nak"/>
-                                <include reference="6ES-3q-doo"/>
-                                <include reference="8g9-af-a3g"/>
-                                <include reference="cz1-rO-8S1"/>
                                 <include reference="Fxg-D8-kRQ"/>
                                 <include reference="MjB-fG-Dmb"/>
                                 <include reference="dRU-8p-9YH"/>
                                 <include reference="klr-Ai-kay"/>
+                                <include reference="l9L-Nj-tl5"/>
+                                <include reference="X3s-Sg-XcW"/>
+                                <include reference="n4c-WS-Nak"/>
+                                <include reference="bmv-E5-4Xv"/>
+                                <include reference="e7C-uu-sj4"/>
                             </mask>
                         </variation>
                     </view>
@@ -233,6 +259,7 @@
                     <connections>
                         <outlet property="barButton" destination="hmw-Qb-Kaz" id="WTo-Ry-ya7"/>
                         <outlet property="collectionView" destination="1jw-Md-62D" id="VY7-Yb-8XH"/>
+                        <outlet property="labelText" destination="qze-MP-rd1" id="3zp-Zt-Vog"/>
                         <outlet property="mapView" destination="grR-Dy-TZZ" id="qX5-DC-PaX"/>
                     </connections>
                 </viewController>
@@ -243,13 +270,17 @@
         <!--Navigation Controller-->
         <scene sceneID="ZI1-hS-RCs">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="XDe-S9-MYZ" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="XDe-S9-MYZ" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="uQo-Zt-qQ3">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="VMI-Y3-muQ">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="3ZD-Ej-ljY"/>
                     </connections>

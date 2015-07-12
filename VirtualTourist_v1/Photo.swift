@@ -16,7 +16,7 @@ import UIKit
 class Photo: NSManagedObject {
     
     @NSManaged var path: String
-    @NSManaged var url: String
+    @NSManaged var urlString: String
     @NSManaged var pin: Pin?
     
     var image: UIImage? {
@@ -40,7 +40,7 @@ class Photo: NSManagedObject {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
     
-    init(photoUrl: String, context: NSManagedObjectContext) {
+    init(photoUrl: String, assignedPin: Pin, context: NSManagedObjectContext) {
         
         let entity = NSEntityDescription.entityForName("Photo", inManagedObjectContext: context)!
         
@@ -50,7 +50,9 @@ class Photo: NSManagedObject {
         
         image = UIImage(named: "placeholder")
         
-        url = photoUrl
+        urlString = photoUrl
+        
+        pin = assignedPin
     }
     
     //setter method of image to nil -> results in deletion of picture as specified in ImageClient

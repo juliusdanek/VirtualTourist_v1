@@ -31,7 +31,7 @@ class VTClient: NSObject {
     }
     
     
-    func getPageNumber (latitude: Double, longitude: Double, completionHandler: (success: Bool, imageArray: [[String: AnyObject]]?, errorString: String?) -> Void) {
+    func getPageNumber (latitude: Double, longitude: Double, completionHandler: (success: Bool, urlArray: [String]?, errorString: String?) -> Void) {
         
         //parameters for call
         var parameterDict: [String: String] = [
@@ -50,33 +50,26 @@ class VTClient: NSObject {
         
         let task = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
             if error != nil {
-                completionHandler(success: false, imageArray: nil, errorString: "Could not download data from server")
+                completionHandler(success: false, urlArray: nil, errorString: "Could not download data from server")
             } else {
                 VTClient.parseJSONWithCompletionHandler(data, completionHandler: {result, error in
                     if error != nil {
-                        completionHandler(success: false, imageArray: nil, errorString: "Could not parse data")
+                        completionHandler(success: false, urlArray: nil, errorString: "Could not parse data")
                     } else {
                         //data format comes back in dictionary with photos
                         if let photos = result["photos"] as? NSDictionary {
-//                            println(photos)
-                            //TODO: Check for that in completion Handler call
                             //check whether the total number of photos is zero, if yes then we have a case of no pictures at that location
                             if photos["total"] as! String == "0" {
-                                completionHandler(success: true, imageArray: nil, errorString: nil)
+                                completionHandler(success: true, urlArray: nil, errorString: nil)
                             } else if let photosData = photos["photo"] as? [[String: AnyObject]] {
-//                                println(photosData)
-                                var urlArray = [[String: AnyObject]]()
+                                var urlArray = [String]()
                                 //create a dictionary that maps both the picture id as well as the url.
                                 for photo in photosData {
                                     if let url = photo["url_q"] as? String {
-                                        var photoDict = [String: AnyObject]()
-                                        photoDict["url"] = url
-                                        photoDict["id"] = photo["id"] as! String
-                                        urlArray.append(photoDict)
+                                        urlArray.append(url)
                                     }
                                 }
-                                println(urlArray)
-                                completionHandler(success: true, imageArray: urlArray, errorString: nil)
+                                completionHandler(success: true, urlArray: urlArray, errorString: nil)
                             }
                         }
                     }
@@ -101,8 +94,6 @@ class VTClient: NSObject {
         let bottom_left_lat = (latitude - 0.5)
         let top_right_lon = (longitude + 0.5)
         let top_right_lat = (latitude + 0.5)
-        
-//        println("\(bottom_left_lon),\(bottom_left_lat),\(top_right_lon),\(top_right_lat)")
         
         return "\(bottom_left_lon),\(bottom_left_lat),\(top_right_lon),\(top_right_lat)"
     }

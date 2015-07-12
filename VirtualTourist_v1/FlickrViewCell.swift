@@ -21,11 +21,9 @@ class FlickrViewCell: UICollectionViewCell {
         }
         set {
             if newValue {
-//                println("selected")
                 super.selected = true
                 self.imageView.alpha = 0.5
             } else if newValue == false {
-//                println("deselected")
                 super.selected = false
                 self.imageView.alpha = 1.0
             }
